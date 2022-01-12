@@ -1,0 +1,1 @@
+Chapter 17 of [Doing Data Science in R](https://www.mjandrews.org/book/ddsr/) provides an introduction to Stan that closely matches this course. Chapter 17 is available [here](chapter_17_stan.pdf), or [here](https://www.mjandrews.org/book/ddsr/assets/chapter_17_stan.pdf).
