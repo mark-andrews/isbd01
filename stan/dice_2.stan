@@ -1,6 +1,8 @@
 data {
   int<lower=1> N;
   int<lower=0, upper=1> y[N];
+  real<lower=0> a;
+  real<lower=0> b;
 }
 
 parameters {
@@ -8,6 +10,6 @@ parameters {
 }
 
 model {
-  theta ~ beta(1, 1); // uniform beta prior
+  theta ~ beta(a, b); // uniform beta prior
   y ~ bernoulli(theta); // bernoulli data model
 }
