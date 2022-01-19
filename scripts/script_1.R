@@ -63,3 +63,79 @@ dice_5_data <- list(y = y,
 
 dice_5_model <- stan(file = 'stan/dice_5.stan', 
                      data = dice_5_data)
+
+
+
+
+# Dice 6 model ------------------------------------------------------------
+
+dice_6_data <- list(y = y,  
+                    N = length(y),
+                    sigma = 1)
+
+dice_6_model <- stan(file = 'stan/dice_6.stan', 
+                     data = dice_6_data)
+
+
+# Summarizing -------------------------------------------------------------
+
+summary(dice_6_model)
+
+# look at chain 4 only
+summary(dice_6_model)$c_summary[,,4]
+
+# just look at `mu` and `theta`
+summary(dice_6_model, par = c('theta', 'mu'))$summary
+
+
+# just look at `theta`
+summary(dice_6_model, par = c('theta', 'mu'), probs = c(0.025, 0.975))$summary
+
+
+
+# Get the samples ---------------------------------------------------------
+
+rstan::extract(dice_6_model, pars = 'theta', permuted = FALSE, inc_warmup = TRUE) %>%
+  magrittr::extract(,,1) %>% 
+  as_tibble()
+
+
+tidybayes::spread_draws(dice_6_model, theta)
+
+
+
+# Plotting ----------------------------------------------------------------
+
+plot(dice_6_model)
+
+
+library(bayesplot)
+mcmc_areas(dice_6_model, pars = c('mu', 'theta'))
+mcmc_areas_ridges(dice_6_model, pars = c('mu', 'theta'))
+mcmc_combo(dice_6_model, pars = c('mu', 'theta'))
+mcmc_hist(dice_6_model, pars = c('mu', 'theta'))
+
+
+
+# Out of sample predictive performance ------------------------------------
+
+library(loo)
+loo(dice_6_model) # this does not work....
+
+
+# run a model, but collect the pointwise log likelihood 
+dice_7_model <- stan(file = 'stan/dice_7.stan', data = dice_5_data)
+
+# extract log_lik and calculate relative effective sample size
+log_lik_7 <- extract_log_lik(dice_7_model, merge_chains = F)
+r_eff_7 <- relative_eff(exp(log_lik_7))
+
+loo(dice_7_model, r_eff = r_eff_7)
+
+
+# Normal inference --------------------------------------------------------
+
+math_df <- read_csv("https://raw.githubusercontent.com/mark-andrews/isbd01/main/data/MathPlacement.csv")
+
+
+ggplot(math_df, aes(x = ACTM)) + geom_histogram(bins = 50)
