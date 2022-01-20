@@ -1,6 +1,11 @@
 data {
   int<lower=1> N;
   vector[N] y;
+  
+  // hyper parameters
+  real<lower=0> tau;
+  real<lower=0> nu;
+  real<lower=0> omega;
 }
 
 parameters {
@@ -9,7 +14,7 @@ parameters {
 }
 
 model {
-  mu ~ normal(0, 100);
-  sigma ~ student_t(3, 0, 10);
+  mu ~ normal(0, tau);
+  sigma ~ student_t(nu, 0, omega);
   y ~ normal(mu, sigma); // likelihood model 
 }

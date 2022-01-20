@@ -133,9 +133,4 @@ r_eff_7 <- relative_eff(exp(log_lik_7))
 loo(dice_7_model, r_eff = r_eff_7)
 
 
-# Normal inference --------------------------------------------------------
 
-math_df <- read_csv("https://raw.githubusercontent.com/mark-andrews/isbd01/main/data/MathPlacement.csv")
-
-
-ggplot(math_df, aes(x = ACTM)) + geom_histogram(bins = 50)
