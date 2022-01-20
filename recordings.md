@@ -13,5 +13,5 @@ These are password protected, and you will have been given this password in the 
 
 # Day 3
 
-* Session 1
+* [Session 1](https://vimeo.com/668356463)
 * Session 2

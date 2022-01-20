@@ -66,3 +66,7 @@ MASS::glm.nb(publications ~ prestige + children + married,
   summary() %>% 
   magrittr::extract2('coefficients')
 
+
+# Linear mixed effects ----------------------------------------------------
+
+
